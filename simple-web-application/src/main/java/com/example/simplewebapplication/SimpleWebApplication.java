@@ -1,4 +1,4 @@
-package com.example.simplewebapplication;
+ package com.example.simplewebapplication;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
