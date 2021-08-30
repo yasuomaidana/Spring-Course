@@ -11,3 +11,7 @@ Those files could be consumed by the user, they could be images, videos etc...
 ![img.png](MR/mavenCommands.png)
 In IntelliJD you can find the maven commands used to control the spring server, you can control them through console, 
 but using IntelliJD is easier.
+
+## Notes
+In this project we are using "sb admin 2" template, it is a vanilla template
+you can find it in [link to sb-admin-2 download template](https://startbootstrap.com/theme/sb-admin-2)
