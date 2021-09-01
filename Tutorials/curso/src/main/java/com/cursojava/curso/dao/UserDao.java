@@ -1,2 +1,4 @@
-package com.cursojava.curso.dao;public interface UserDao {
+package com.cursojava.curso.dao;
+
+public interface UserDao {
 }
