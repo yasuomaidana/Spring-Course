@@ -1,4 +1,4 @@
-package models;
+package com.cursojava.curso.models;
 
 public class User {
     private Long id;

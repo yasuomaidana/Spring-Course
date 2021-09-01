@@ -1,6 +1,6 @@
 package com.cursojava.curso.controllers;
 //Controllers are used to manage urls
-import models.User;
+import com.cursojava.curso.models.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
