@@ -1,6 +1,10 @@
 package com.cursojava.curso.controllers;
 //Controllers are used to manage urls
+import com.cursojava.curso.dao.UserDao;
 import com.cursojava.curso.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +14,11 @@ import java.util.List;
 
 @RestController//Indicates that it is a controller
 public class UserController {
+
+    @Autowired
+    private UserDao userDao;
+    //Logger created to watch errors
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
     @RequestMapping(value = "proof")
     public String proof(){
          return "proof";
@@ -35,6 +44,17 @@ public class UserController {
         user.setPhone("1234567890");
         return user;
     }
+
+    @RequestMapping(value="users")
+    public List<User> getUsers(){
+        try{
+            return userDao.getUsers();
+        }catch(Exception ex){
+            logger.error("Error",ex);
+            throw ex;
+        }
+    }
+
     private User createUser(Long Id,String Name,String Lastname,String Phone){
         User user = new User();
         user.setId(Id);
@@ -44,8 +64,8 @@ public class UserController {
         user.setPhone(Phone);
         return user;
     }
-    @RequestMapping(value="users")
-    public List<User> getUsers(){
+    @RequestMapping(value="usersHard")
+    public List<User> getUsersHard(){
         List<User> users = new ArrayList<>();
         users.add(createUser(123L,"John","Black","1234"));
         users.add(createUser(124L,"Mike","Wasabi","1235"));
