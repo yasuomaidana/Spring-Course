@@ -5,10 +5,7 @@ import com.cursojava.curso.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +17,8 @@ public class UserController {
     private UserDao userDao;
     //Logger created to watch errors
     private Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    //Raw proofs
     @RequestMapping(value = "api/proof")
     public String proof(){
          return "proof";
@@ -33,6 +32,13 @@ public class UserController {
         user.setLastname("Dr");
         user.setPhone("1234567890");
         return  user;
+    }
+
+    //Advanced requests
+    //Register a user
+    @RequestMapping(value = "api/user",method = RequestMethod.POST)
+    public void registerUser(@RequestBody User user){
+        userDao.register(user);
     }
     //Returns a user using ID
     @RequestMapping(value="api/user/{ID}")
