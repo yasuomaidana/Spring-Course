@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,12 +20,12 @@ public class UserController {
     private UserDao userDao;
     //Logger created to watch errors
     private Logger logger = LoggerFactory.getLogger(UserController.class);
-    @RequestMapping(value = "proof")
+    @RequestMapping(value = "api/proof")
     public String proof(){
          return "proof";
     }
     //Returns an user
-    @RequestMapping(value = "proofUser")
+    @RequestMapping(value = "api/proofUser")
     public User userProof(){
         User user = new User();
         user.setEmail("idoncare@LOL.com");
@@ -34,7 +35,7 @@ public class UserController {
         return  user;
     }
     //Returns a user using ID
-    @RequestMapping(value="user/{ID}")
+    @RequestMapping(value="api/user/{ID}")
     public User getUserbyID(@PathVariable Long ID){
         User user = new User();
         user.setId(ID);
@@ -44,8 +45,11 @@ public class UserController {
         user.setPhone("1234567890");
         return user;
     }
-
-    @RequestMapping(value="users")
+    @RequestMapping(value="api/user/{ID}",method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable Long ID){
+        userDao.delete(ID);
+    }
+    @RequestMapping(value="api/users")
     public List<User> getUsers(){
         try{
             return userDao.getUsers();
@@ -64,7 +68,7 @@ public class UserController {
         user.setPhone(Phone);
         return user;
     }
-    @RequestMapping(value="usersHard")
+    @RequestMapping(value="api/usersHard")
     public List<User> getUsersHard(){
         List<User> users = new ArrayList<>();
         users.add(createUser(123L,"John","Black","1234"));
