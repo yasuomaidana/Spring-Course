@@ -18,7 +18,14 @@ public class UserDaoImp implements UserDao{
     @Override
     @Transactional
     public List<User> getUsers() {
+        //Hibernate makes references to CLASSES not to table or columns
         String query ="FROM User";//Makes reference to our MODEL CLASS
         return entityManager.createQuery(query).getResultList();//Hibernates queries are not SQL queries
+    }
+
+    @Override
+    public void delete(Long ID) {
+        User user = entityManager.find(User.class,ID);
+        entityManager.remove(user);
     }
 }
