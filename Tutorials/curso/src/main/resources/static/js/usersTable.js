@@ -8,6 +8,7 @@ convertToRow=(users)=>{
     let row = "";
     users.forEach(user=>{
         let button = `<button class="btn btn-danger btn-circle btn-sm" onclick="deleteUser(${user.id})"><i class="fas fa-trash"></i></button>`;
+        user.phone = user.phone==null ? '-':user.phone;
         let rowContent =`<td>${user.id}</td><td>${user.name} ${user.lastname}</td><td>${user.email}</td><td>${user.phone}</td>
         <td>${button}</td>`
         let tr = `<tr>${rowContent}</tr>`;
