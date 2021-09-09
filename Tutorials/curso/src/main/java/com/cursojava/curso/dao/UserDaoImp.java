@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -32,5 +33,19 @@ public class UserDaoImp implements UserDao{
     @Override
     public void register(User user) {
         entityManager.merge(user);
+    }
+
+    @Override
+    public boolean verifyEmailPassword(User user) {
+        String query = "FROM User WHERE email = :email AND password = :password";
+        Object response = null;
+        try{
+            response = entityManager.createQuery(query)
+                    .setParameter("email", user.getEmail())
+                    .setParameter("password", user.getPassword())
+                    .getSingleResult();
+        }catch (NoResultException e){
+        }
+        return response!=null;
     }
 }

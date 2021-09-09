@@ -9,4 +9,6 @@ public interface UserDao {
     void delete(Long ID);
 
     void register(User user);
+
+    boolean verifyEmailPassword(User user);
 }
