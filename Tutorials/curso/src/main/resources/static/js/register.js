@@ -3,8 +3,11 @@ $(document).ready(()=>{
 });
 async function registerUser(){
     let data = {};
-    data.name = document.getElementById('name').value;
-    data.lastname = document.getElementById('name').value;
+    let name =document.getElementById('name').value;
+    data.name = name != "" ? name:null;
+    let lastname =document.getElementById('lastname').value;
+    data.lastname = lastname != "" ? lastname:null;
+    if(data.lastname==null) alert("Null");
     data.email = document.getElementById('email').value;
     data.password = document.getElementById('password').value;
     
@@ -22,4 +25,5 @@ async function registerUser(){
         //JSON.stringify(whatever) convert any javascript object into a json string
         body:JSON.stringify(data)
     })
+    
 }
