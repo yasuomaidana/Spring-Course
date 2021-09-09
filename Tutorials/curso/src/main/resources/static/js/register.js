@@ -7,7 +7,6 @@ async function registerUser(){
     data.name = name != "" ? name:null;
     let lastname =document.getElementById('lastname').value;
     data.lastname = lastname != "" ? lastname:null;
-    if(data.lastname==null) alert("Null");
     data.email = document.getElementById('email').value;
     data.password = document.getElementById('password').value;
     
