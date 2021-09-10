@@ -26,7 +26,7 @@ public class UserController {
     }
     //Returns a user using ID
     @RequestMapping(value="api/user/{ID}")
-    public User getUserbyID(@PathVariable Long ID){
+    public User getUserByID(@PathVariable Long ID){
         return userDao.getUserById(ID);
     }
     @RequestMapping(value="api/user/{ID}",method = RequestMethod.DELETE)
