@@ -61,6 +61,12 @@
 			<version>1.18.20</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Adding Argon2 to secure things -->
+		<dependency>
+			<groupId>de.mkammerer</groupId>
+			<artifactId>argon2-jvm</artifactId>
+			<version>2.10.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
