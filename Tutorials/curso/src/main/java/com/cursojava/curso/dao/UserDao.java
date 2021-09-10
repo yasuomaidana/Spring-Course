@@ -11,4 +11,6 @@ public interface UserDao {
     void register(User user);
 
     boolean verifyEmailPassword(User user);
+
+    User getUserById(Long id);
 }

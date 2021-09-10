@@ -17,7 +17,6 @@ public class UserDaoImp implements UserDao{
     private EntityManager entityManager;//Helps to make the connection to DB
 
     @Override
-    @Transactional
     public List<User> getUsers() {
         //Hibernate makes references to CLASSES not to table or columns
         String query ="FROM User";//Makes reference to our MODEL CLASS
@@ -47,5 +46,10 @@ public class UserDaoImp implements UserDao{
         }catch (NoResultException e){
         }
         return response!=null;
+    }
+
+    @Override
+    public User getUserById(Long ID) {
+        return entityManager.find(User.class,ID);
     }
 }
