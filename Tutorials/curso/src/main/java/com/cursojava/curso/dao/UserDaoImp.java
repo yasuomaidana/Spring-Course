@@ -1,6 +1,8 @@
 package com.cursojava.curso.dao;
 
 import com.cursojava.curso.models.User;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,21 +33,29 @@ public class UserDaoImp implements UserDao{
 
     @Override
     public void register(User user) {
+        // check to see how it works https://mkyong.com/java/java-password-hashing-with-argon2/
+        //https://www.twelve21.io/how-to-use-argon2-for-password-hashing-in-java/
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+        String secured_password=argon2.hash(1,1024,1,user.getPassword());
+        user.setPassword(secured_password);
         entityManager.merge(user);
     }
 
     @Override
     public boolean verifyEmailPassword(User user) {
-        String query = "FROM User WHERE email = :email AND password = :password";
-        Object response = null;
+        String query = "FROM User WHERE email = :email";
+        User response = null;
         try{
-            response = entityManager.createQuery(query)
+            response = (User) entityManager.createQuery(query)
                     .setParameter("email", user.getEmail())
-                    .setParameter("password", user.getPassword())
                     .getSingleResult();
         }catch (NoResultException e){
+            return false;
         }
-        return response!=null;
+        // check to see how it works https://mkyong.com/java/java-password-hashing-with-argon2/
+        //https://www.twelve21.io/how-to-use-argon2-for-password-hashing-in-java/
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+        return argon2.verify(response.getPassword(),user.getPassword());
     }
 
     @Override
