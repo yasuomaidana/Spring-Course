@@ -12,5 +12,5 @@ public interface UserDao {
 
     boolean verifyEmailPassword(User user);
 
-    User getUserById(Long id);
+    User getUserById(Long ID);
 }
