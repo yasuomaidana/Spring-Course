@@ -23,6 +23,7 @@ async function registerUser(){
         },
         //JSON.stringify(whatever) convert any javascript object into a json string
         body:JSON.stringify(data)
-    })
-    
+    });
+    alert("User created succesfully redirecting to login");
+    window.location.href="login.html";
 }

@@ -15,5 +15,5 @@ async function login(){
     });
     const response = await request.text();
     if(response =="Oki") window.location.href="users.html";
-    else alert("Wrong credentials 🔥😡🔥")
+    else alert("Wrong credentials 🔥😡🔥");
 }
