@@ -2,6 +2,7 @@ package com.cursojava.curso.controllers;
 //Controllers are used to manage urls
 import com.cursojava.curso.dao.UserDao;
 import com.cursojava.curso.models.User;
+import com.cursojava.curso.utils.JWTUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class UserController {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private JWTUtil jwtUtil;
     //Logger created to watch errors
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -34,7 +37,9 @@ public class UserController {
         userDao.delete(ID);
     }
     @RequestMapping(value="api/users")
-    public List<User> getUsers(){
+    public List<User> getUsers(@RequestHeader(value = "Authorization") String token){
+        String userId = jwtUtil.getKey(token);
+        if (userId==null) return null;
         try{
             return userDao.getUsers();
         }catch(Exception ex){
