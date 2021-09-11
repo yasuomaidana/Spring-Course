@@ -1,9 +1,8 @@
 async function login(){
-    let email = $("#email").val();
-    let password = $("#password").val();
+
     let data ={
-        "email":email,
-        "password":password
+        "email":$("#email").val(),
+        "password":$("#password").val()
     };
     const request = await fetch('api/login',{
         method:'POST',
@@ -14,6 +13,10 @@ async function login(){
         body: JSON.stringify(data)
     });
     const response = await request.text();
-    if(response =="Oki") window.location.href="users.html";
+    if(response !="Fail"){ 
+        localStorage.setItem("token",response);
+        localStorage.setItem("email",data.email);
+        window.location.href="users.html";
+    }
     else alert("Wrong credentials 🔥😡🔥");
 }
