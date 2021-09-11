@@ -42,7 +42,7 @@ public class UserDaoImp implements UserDao{
     }
 
     @Override
-    public boolean verifyEmailPassword(User user) {
+    public User getVerifiedUser(User user) {
         String query = "FROM User WHERE email = :email";
         User response = null;
         try{
@@ -50,12 +50,14 @@ public class UserDaoImp implements UserDao{
                     .setParameter("email", user.getEmail())
                     .getSingleResult();
         }catch (NoResultException e){
-            return false;
+            return null;
         }
         // check to see how it works https://mkyong.com/java/java-password-hashing-with-argon2/
         //https://www.twelve21.io/how-to-use-argon2-for-password-hashing-in-java/
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        return argon2.verify(response.getPassword(),user.getPassword());
+        boolean authorized = argon2.verify(response.getPassword(),user.getPassword());
+        if(authorized) return response;
+        else return null;
     }
 
     @Override
