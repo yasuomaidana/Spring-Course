@@ -16,13 +16,18 @@ convertToRow=(users)=>{
     });
     return row;
 }
+getHeaders = ()=> {
+    return {
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+        'Authorization':localStorage.getItem("token")
+    }
+};
 async function loadUsers(){//Since we used await we have to define this function as an asynchronic
+    console.log(getHeaders());
     const request = await fetch("api/users",{//await make request to wait the answer, all the program halts until the function is resolved
         method: 'GET', 
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        }
+        headers:getHeaders()
     });
     const users = await request.json();
     document.querySelector('#users tbody').outerHTML = convertToRow(users);
@@ -34,10 +39,7 @@ async function deleteUser(id){
     }
     const request = await fetch(`api/user/${id}`,{
         method: 'DELETE', 
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        }
+        headers:getHeaders()
     });
     location.reload();
 }
