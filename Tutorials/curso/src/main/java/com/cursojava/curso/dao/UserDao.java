@@ -6,11 +6,12 @@ import java.util.List;
 
 public interface UserDao {
     List<User> getUsers();
+
     void delete(Long ID);
 
     void register(User user);
 
-    boolean verifyEmailPassword(User user);
-
     User getUserById(Long ID);
+
+    User getVerifiedUser(User user);
 }
