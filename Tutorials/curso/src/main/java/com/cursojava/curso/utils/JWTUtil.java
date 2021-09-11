@@ -1,5 +1,6 @@
 package com.cursojava.curso.utils;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -63,5 +64,13 @@ public class JWTUtil {
 
         // Builds the JWT and serializes it to a compact, URL-safe string
         return builder.compact();
+    }
+
+    public String getKey(String jwt) {
+        // This line will throw an exception if it is not a signed JWS (as
+        // expected)
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(secret))
+                .parseClaimsJws(jwt).getBody();
+        return claims.getId();
     }
 }
