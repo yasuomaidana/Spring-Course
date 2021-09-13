@@ -1,2 +1,11 @@
-package com.testYasuo.HomeworkCourse;public class ServletInitializer {
+package com.testYasuo.HomeworkCourse;
+
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
+public class ServletInitializer extends SpringBootServletInitializer {
+    @Override
+    protected SpringApplicationBuilder configure( SpringApplicationBuilder application){
+        return application.sources(HomeworkCourseApplication.class);
+    }
 }
