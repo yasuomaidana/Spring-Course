@@ -1,0 +1,12 @@
+:root {
+    --black-coffee: #30292fff;
+    --independence: #413f54ff;
+    --liberty: #5f5aa2ff;
+    --y-in-mn-blue: #355691ff;
+    --onyx: #3f4045ff;
+}
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
