@@ -48,5 +48,10 @@ public class App
         NotUsingSetters notUsingSetters = context2.getBean(NotUsingSetters.class);
         notUsingSetters.driveAll();
 
+        System.out.println("~~~~~~~~~~~");
+        System.out.println("Using named beans");
+        ApplicationContext usingNames = new AnnotationConfigApplicationContext(ConfigNamedBeans.class);
+        Car namedCar = usingNames.getBean("myNamedCar",Car.class);
+        namedCar.drive();
     }
 }
