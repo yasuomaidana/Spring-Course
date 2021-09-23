@@ -1,4 +1,4 @@
-package com.JavaSpringPractice.ReditClone.service;
+package com.JavaSpringPractice.ReditClone.service.mailservice;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
