@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {//Post Entity, Long Type of Primary Key
-    Optional<User> findByUserName(String username);
+    //Optional<User> findByUsername(String username);
 }
