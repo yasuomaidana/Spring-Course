@@ -16,7 +16,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests()//Allows incoming requests
                 .antMatchers("/api/auth/**")//any other path should from ** should be authenticated
-                .permitAll().anyRequest();
+                .permitAll()
+                .anyRequest()
+                .authenticated();
 
     }
     @Bean
