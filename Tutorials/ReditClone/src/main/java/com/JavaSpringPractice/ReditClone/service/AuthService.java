@@ -1,6 +1,7 @@
 package com.JavaSpringPractice.ReditClone.service;
 
 import com.JavaSpringPractice.ReditClone.dto.RegisterRequest;
+import com.JavaSpringPractice.ReditClone.exceptions.SpringRedditException;
 import com.JavaSpringPractice.ReditClone.model.NotificationEmail;
 import com.JavaSpringPractice.ReditClone.model.User;
 import com.JavaSpringPractice.ReditClone.model.token.VerificationToken;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -52,5 +54,18 @@ public class AuthService {
 
           verificationTokenRepository.save(verificationToken);
           return token;
+     }
+     public void verifyAccount(String token){
+          Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
+          verificationToken.orElseThrow(()->new SpringRedditException("Invalid token"));
+          fetchUserAndEnable(verificationToken.get());
+     }
+     @Transactional
+     private void fetchUserAndEnable(VerificationToken verificationToken){
+          String email = verificationToken.getUser().getEmail();
+          User user = userRepository.findByEmail(email)
+                  .orElseThrow(()->new SpringRedditException("User not found"));
+          user.setEnabled(true);
+          userRepository.save(user);
      }
 }
