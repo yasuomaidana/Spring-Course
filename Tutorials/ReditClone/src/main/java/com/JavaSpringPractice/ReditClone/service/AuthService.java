@@ -56,9 +56,10 @@ public class AuthService {
           return token;
      }
      public void verifyAccount(String token){
-          Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
-          verificationToken.orElseThrow(()->new SpringRedditException("Invalid token"));
-          fetchUserAndEnable(verificationToken.get());
+          fetchUserAndEnable(
+                  verificationTokenRepository
+                          .findByToken(token)
+                          .orElseThrow(()->new SpringRedditException("Invalid token")));
      }
      @Transactional
      private void fetchUserAndEnable(VerificationToken verificationToken){
