@@ -1,5 +1,7 @@
 package com.JavaSpringPractice.ReditClone.controller;
 
+import com.JavaSpringPractice.ReditClone.dto.AuthenticationResponse;
+import com.JavaSpringPractice.ReditClone.dto.LoginRequest;
 import com.JavaSpringPractice.ReditClone.dto.RegisterRequest;
 import com.JavaSpringPractice.ReditClone.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -21,5 +23,9 @@ public class AuthController {
     public  ResponseEntity<String> verifyAccount(@PathVariable String token){
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account Activated Successfully",HttpStatus.OK);
+    }
+    @PostMapping("/login")
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
+        return authService.login(loginRequest);
     }
 }
