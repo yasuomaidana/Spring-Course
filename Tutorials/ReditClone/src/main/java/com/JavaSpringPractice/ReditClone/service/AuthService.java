@@ -1,5 +1,7 @@
 package com.JavaSpringPractice.ReditClone.service;
 
+import com.JavaSpringPractice.ReditClone.dto.AuthenticationResponse;
+import com.JavaSpringPractice.ReditClone.dto.LoginRequest;
 import com.JavaSpringPractice.ReditClone.dto.RegisterRequest;
 import com.JavaSpringPractice.ReditClone.exceptions.SpringRedditException;
 import com.JavaSpringPractice.ReditClone.model.NotificationEmail;
@@ -7,9 +9,14 @@ import com.JavaSpringPractice.ReditClone.model.User;
 import com.JavaSpringPractice.ReditClone.model.token.VerificationToken;
 import com.JavaSpringPractice.ReditClone.repository.UserRepository;
 import com.JavaSpringPractice.ReditClone.repository.VerificationTokenRepository;
+import com.JavaSpringPractice.ReditClone.security.JwtProvider;
 import com.JavaSpringPractice.ReditClone.service.mailservice.MailService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +33,10 @@ public class AuthService {
      private final UserRepository userRepository;
      private final VerificationTokenRepository verificationTokenRepository;
      private final MailService mailService;
+     private final AuthenticationManager authenticationManager;
+     // Since it is an interface we need instantiate something
+     // because there are several implementation of this type
+     private final JwtProvider jwtProvider;
 
      @Transactional
      public void signup(RegisterRequest registerRequest){
@@ -68,5 +79,13 @@ public class AuthService {
                   .orElseThrow(()->new SpringRedditException("User not found"));
           user.setEnabled(true);
           userRepository.save(user);
+     }
+
+     public AuthenticationResponse login(LoginRequest loginRequest) {
+          Authentication authenticate = authenticationManager
+                  .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
+          SecurityContextHolder.getContext().setAuthentication(authenticate);
+          String token  = jwtProvider.generateToken(authenticate);
+          return new AuthenticationResponse(token,loginRequest.getUsername());
      }
 }
