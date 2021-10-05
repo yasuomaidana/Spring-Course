@@ -1,7 +1,7 @@
 package com.JavaSpringPractice.ReditClone.security;
 
 import com.JavaSpringPractice.ReditClone.exceptions.SpringRedditException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -37,5 +37,23 @@ public class JwtProvider {
         } catch (UnrecoverableKeyException|KeyStoreException|NoSuchAlgorithmException e) {
             throw new SpringRedditException("Exception occurred while retrieving public key from keystore");
         }
+    }
+    public boolean validateToken(String jwt){
+        Jws<Claims> ans = Jwts.parserBuilder().setSigningKey(getPublicKey()).build().parseClaimsJws(jwt);
+        return true;
+    }
+
+    private PublicKey getPublicKey() {
+        try {
+            return keyStore.getCertificate("springblog").getPublicKey();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+            throw new SpringRedditException("Exception while getting public key");
+        }
+    }
+
+    public String getUsernameFromJwt(String token){
+        Claims claims = Jwts.parserBuilder().setSigningKey(getPublicKey()).build().parseClaimsJws(token).getBody();
+        return claims.getSubject();
     }
 }
