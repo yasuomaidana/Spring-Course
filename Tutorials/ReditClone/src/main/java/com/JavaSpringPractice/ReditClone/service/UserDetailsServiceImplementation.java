@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +23,11 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(()->new SpringRedditException("User not found"));
+        User user;
+        Optional<User> userEmail = userRepository.findByEmail(email);
+        if (userEmail.isPresent()) user = userEmail.get();
+        else user = userRepository.findByUsername(email).orElseThrow(()->new SpringRedditException("User not found"));
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
