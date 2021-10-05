@@ -1,8 +1,10 @@
 package com.JavaSpringPractice.ReditClone.config;
 
+import com.JavaSpringPractice.ReditClone.security.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,11 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;//Beans added
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;// These beans are override classes
     //Creates a bean that implements authenticationManager to avoid confuse the program
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -31,8 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()//Allows incoming requests
                 .antMatchers("/api/auth/**")//any other path should from ** should be authenticated
                 .permitAll()
+                .antMatchers(HttpMethod.GET,"/api/subreddit")
+                .permitAll()
                 .anyRequest()
                 .authenticated();
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class);
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
