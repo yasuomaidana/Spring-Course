@@ -31,10 +31,10 @@
 	%>
 	<h2>Declarations</h2>
 	You can declare functions through &lt;%! Type methodName(parameters){ Your function} %&gt;<br>
-	<%! 
-	String makeItLower(String data){
-		return data.toLowerCase();
-	}
+	<%!
+		String makeItLower(String data){
+			return data.toLowerCase();
+		}
 	%>
 	You can call them using <b>expressions</b> <br>Example :<br>
 	HI EVERYONE to lower case = <%= makeItLower("HI EVERYONE") %>
