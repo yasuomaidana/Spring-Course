@@ -5,5 +5,8 @@
 	</head>
 	<body>
 		Welcome to Spring Boot JSP proof.
+		<form action="/login" method="GET">
+			<input type="submit" value="Go to Login">
+		</form>
 	</body>
 </html>
