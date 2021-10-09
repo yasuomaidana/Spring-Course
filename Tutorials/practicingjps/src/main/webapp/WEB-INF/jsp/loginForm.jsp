@@ -16,8 +16,8 @@
     </header>
     <main>
         <form action="/login" method="post">
-            <label for="user">Name:</label>
-            <input type="text" name="user" id="user">
+            <label for="username">Name:</label>
+            <input type="text" name="username" id="username">
             <label for="password">Name:</label>
             <input type="password" name="password" id="password">
             <input type="submit" value="Login">
