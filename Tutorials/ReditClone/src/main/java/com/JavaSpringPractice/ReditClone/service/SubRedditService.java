@@ -1,6 +1,7 @@
 package com.JavaSpringPractice.ReditClone.service;
 
 import com.JavaSpringPractice.ReditClone.dto.SubRedditDto;
+import com.JavaSpringPractice.ReditClone.mapper.SubRedditMapper;
 import com.JavaSpringPractice.ReditClone.model.SubReddit;
 import com.JavaSpringPractice.ReditClone.repository.SubRedditRepository;
 import lombok.AllArgsConstructor;
@@ -17,10 +18,10 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor @Slf4j
 public class SubRedditService {
     private final SubRedditRepository subRedditRepository;
-
+    private final SubRedditMapper subRedditMapper;
     @Transactional
     public SubRedditDto save(SubRedditDto subRedditDto){
-        SubReddit saved = subRedditRepository.save(mapSubRedditDto(subRedditDto));
+        SubReddit saved = subRedditRepository.save(subRedditMapper.mapDtoToSubReddit(subRedditDto));
         subRedditDto.setId(saved.getId());
         return subRedditDto;
     }
@@ -28,21 +29,11 @@ public class SubRedditService {
     @Transactional(readOnly=true)
     public List<SubRedditDto> getAll() {
         return subRedditRepository.findAll().stream()
-                .map(this::mapToDto).collect(toList());
+                .map(subRedditMapper::mapSubRedditToDto).collect(toList());
     }
 
-    private SubRedditDto mapToDto(SubReddit subReddit) {
-        return SubRedditDto.builder().subRedditName(subReddit.getName())
-                .id(subReddit.getId())
-                .numberOfPosts(subReddit.getPosts().size())
-                .description(subReddit.getDescription())
-                .build();
+    public SubRedditDto getSubRedditId(Long id){
+        SubReddit subReddit = subRedditRepository.getById(id);
+        return subRedditMapper.mapSubRedditToDto(subReddit);
     }
-
-    private SubReddit mapSubRedditDto(SubRedditDto subRedditDto) {
-        return SubReddit.builder().name(subRedditDto.getSubRedditName())
-                .description(subRedditDto.getDescription())
-                .build();
-    }
-
 }

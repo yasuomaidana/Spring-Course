@@ -3,10 +3,10 @@ package com.JavaSpringPractice.ReditClone;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class ReditCloneApplicationTests {
 
-	@Test
+	//@Test
 	void contextLoads() {
 	}
 

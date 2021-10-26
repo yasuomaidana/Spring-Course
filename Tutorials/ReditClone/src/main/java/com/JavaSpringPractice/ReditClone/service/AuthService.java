@@ -73,7 +73,7 @@ public class AuthService {
                           .orElseThrow(()->new SpringRedditException("Invalid token")));
      }
      @Transactional
-     private void fetchUserAndEnable(VerificationToken verificationToken){
+     void fetchUserAndEnable(VerificationToken verificationToken){
           String email = verificationToken.getUser().getEmail();
           User user = userRepository.findByEmail(email)
                   .orElseThrow(()->new SpringRedditException("User not found"));

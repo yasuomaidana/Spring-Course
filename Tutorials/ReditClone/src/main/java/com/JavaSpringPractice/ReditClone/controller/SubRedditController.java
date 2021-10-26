@@ -26,4 +26,10 @@ public class SubRedditController {
          return ResponseEntity.status(HttpStatus.OK)
                  .body(subRedditService.getAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SubRedditDto> getSubReddit(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(subRedditService.getSubRedditId(id));
+    }
 }
