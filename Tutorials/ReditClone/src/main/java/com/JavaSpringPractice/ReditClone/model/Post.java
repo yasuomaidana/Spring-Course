@@ -23,8 +23,7 @@ public class Post {
     private String postName;
     @Nullable
     private String url;
-    @Nullable
-    @Lob
+    @Nullable @Lob
     private String description;
     private Integer voteCount = 0;
     @ManyToOne(fetch = FetchType.LAZY)
