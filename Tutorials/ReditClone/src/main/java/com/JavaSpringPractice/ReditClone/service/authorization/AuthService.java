@@ -2,6 +2,7 @@ package com.JavaSpringPractice.ReditClone.service;
 
 import com.JavaSpringPractice.ReditClone.dto.AuthenticationResponse;
 import com.JavaSpringPractice.ReditClone.dto.LoginRequest;
+import com.JavaSpringPractice.ReditClone.dto.RefreshTokenRequest;
 import com.JavaSpringPractice.ReditClone.dto.RegisterRequest;
 import com.JavaSpringPractice.ReditClone.exceptions.SpringRedditException;
 import com.JavaSpringPractice.ReditClone.model.NotificationEmail;
@@ -87,12 +88,21 @@ public class AuthService {
                   .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
           SecurityContextHolder.getContext().setAuthentication(authenticate);
           String token  = jwtProvider.generateToken(authenticate);
-          return new AuthenticationResponse(token,loginRequest.getUsername());
+          return AuthenticationResponse.builder()
+                  .authenticationToken(token)
+                  .refreshToken("")
+                  .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationTimeMillis()))
+                  .username(loginRequest.getUsername())
+                  .build();
      }
      @Transactional(readOnly = true)
      public User getCurrentUser() {
           org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                   .getContext().getAuthentication().getPrincipal();
           return userRepository.findByUsername(user.getUsername()).orElseThrow(()->new UsernameNotFoundException("User not found"));
+     }
+
+     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+          return null;
      }
 }
