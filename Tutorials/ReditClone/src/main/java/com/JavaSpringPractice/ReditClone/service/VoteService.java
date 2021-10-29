@@ -8,6 +8,7 @@ import com.JavaSpringPractice.ReditClone.model.Post;
 import com.JavaSpringPractice.ReditClone.model.vote.Vote;
 import com.JavaSpringPractice.ReditClone.repository.PostRepository;
 import com.JavaSpringPractice.ReditClone.repository.VoteRepository;
+import com.JavaSpringPractice.ReditClone.service.authorization.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

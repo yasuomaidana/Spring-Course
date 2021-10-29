@@ -1,4 +1,4 @@
-package com.JavaSpringPractice.ReditClone.service;
+package com.JavaSpringPractice.ReditClone.service.authorization;
 
 import com.JavaSpringPractice.ReditClone.dto.AuthenticationResponse;
 import com.JavaSpringPractice.ReditClone.dto.LoginRequest;
@@ -35,10 +35,11 @@ public class AuthService {
      private final UserRepository userRepository;
      private final VerificationTokenRepository verificationTokenRepository;
      private final MailService mailService;
-     private final AuthenticationManager authenticationManager;
      // Since it is an interface we need instantiate something
      // because there are several implementation of this type
+     private final AuthenticationManager authenticationManager;//JwtAuthenticationFilter is the one that implements the thing
      private final JwtProvider jwtProvider;
+     private final RefreshTokenService refreshTokenService;
 
      @Transactional
      public void signup(RegisterRequest registerRequest){
@@ -90,11 +91,12 @@ public class AuthService {
           String token  = jwtProvider.generateToken(authenticate);
           return AuthenticationResponse.builder()
                   .authenticationToken(token)
-                  .refreshToken("")
+                  .refreshToken(refreshTokenService.generateRefreshToken().getToken())
                   .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationTimeMillis()))
                   .username(loginRequest.getUsername())
                   .build();
      }
+
      @Transactional(readOnly = true)
      public User getCurrentUser() {
           org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
@@ -103,6 +105,14 @@ public class AuthService {
      }
 
      public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
-          return null;
+          refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+          String token = jwtProvider.generateTokenWithUserName(refreshTokenRequest.getUsername());
+          return AuthenticationResponse.builder()
+                  .authenticationToken(token)
+                  .refreshToken(refreshTokenRequest.getRefreshToken())
+                  .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationTimeMillis()))
+                  .username(refreshTokenRequest.getUsername())
+                  .build();
      }
+
 }

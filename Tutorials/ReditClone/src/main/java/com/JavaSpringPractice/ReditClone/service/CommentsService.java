@@ -10,6 +10,7 @@ import com.JavaSpringPractice.ReditClone.model.User;
 import com.JavaSpringPractice.ReditClone.repository.CommentRepository;
 import com.JavaSpringPractice.ReditClone.repository.PostRepository;
 import com.JavaSpringPractice.ReditClone.repository.UserRepository;
+import com.JavaSpringPractice.ReditClone.service.authorization.AuthService;
 import com.JavaSpringPractice.ReditClone.service.mailservice.MailContentBuilder;
 import com.JavaSpringPractice.ReditClone.service.mailservice.MailService;
 import lombok.AllArgsConstructor;

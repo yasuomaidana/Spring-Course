@@ -10,6 +10,7 @@ import com.JavaSpringPractice.ReditClone.model.User;
 import com.JavaSpringPractice.ReditClone.repository.PostRepository;
 import com.JavaSpringPractice.ReditClone.repository.SubRedditRepository;
 import com.JavaSpringPractice.ReditClone.repository.UserRepository;
+import com.JavaSpringPractice.ReditClone.service.authorization.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
