@@ -1,4 +1,4 @@
-package com.vulpuxpractice.security;
+package com.vulpuxpractice.securityexample;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
