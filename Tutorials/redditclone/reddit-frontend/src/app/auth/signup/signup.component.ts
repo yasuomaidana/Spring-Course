@@ -30,6 +30,6 @@ export class SignupComponent implements OnInit {
     this.authService.signup(this.signupRequestPayload)
     .subscribe(data=>{
       console.log(data);
-    });
+    },e=>console.log(e,"catched"));
   }
 }
