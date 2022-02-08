@@ -13,7 +13,7 @@ import com.JavaSpringPractice.ReditClone.repository.VerificationTokenRepository;
 import com.JavaSpringPractice.ReditClone.security.JwtProvider;
 import com.JavaSpringPractice.ReditClone.service.mailservice.MailService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -49,7 +48,11 @@ public class AuthService {
           user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
           user.setCreated(Instant.now());
           user.setEnabled(false);
-          userRepository.save(user);
+          try{
+               userRepository.save(user);
+          }catch (DataIntegrityViolationException dive){
+               throw new SpringRedditException("Duplicated user",dive);
+          }
 
           String token = generateVerificationToken(user);
           mailService.sendMail(
