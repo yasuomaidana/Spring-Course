@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../shared/auth.service';
 import { LoginRequestPayload } from './login-request.payload';
 
@@ -10,25 +12,44 @@ import { LoginRequestPayload } from './login-request.payload';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm!: FormGroup;
+  loginForm: FormGroup;
   loginRequestPayload: LoginRequestPayload = {username:'',password:''};
+  registerSuccessMessage: string ='';
+  isError: boolean = false;
 
-  constructor(private authService:AuthService) { }
-
-  ngOnInit(): void {
+  constructor(private authService:AuthService,
+    private activatedRoute:ActivatedRoute,
+    private router:Router,
+    private toastr:ToastrService) {
     this.loginForm = new FormGroup({
       username: new FormControl('',Validators.required),
       password: new FormControl('',Validators.required)
     });
-  }
+   }
+
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(
+      params=>{
+        if(params.registered !==undefined && params.registered==='true'){
+          this.toastr.success('Signup Succesfully');
+          this.registerSuccessMessage='Please Check your inbox for activation link and'
+          +" active your account before you Login!";
+        }
+      }
+    );
+   }
   login(){
     this.loginRequestPayload.username = this.loginForm.get('username')?.value;
     this.loginRequestPayload.password = this.loginForm.get('password')?.value;
     console.log(this.loginRequestPayload);
     this.authService.login(this.loginRequestPayload).subscribe(data=>{
       console.log('Login succesful')
+      this.isError = false;
+      this.router.navigateByUrl('/');
+      this.toastr.success('Login Successful');
     },error=>{
       console.log(error);
+      this.isError = true;
     });
   }
 }
