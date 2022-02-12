@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { SignupRequestPayload } from "../signup/signup-request.payload";
+import { SignupRequestPayload } from "../payloads/signup-request.payload";
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { LoginRequestPayload } from '../login/login-request.payload';
-import { LoginResponse } from '../login/login-response.payload';
+import { LoginRequestPayload } from '../payloads/login-request.payload';
+import { LoginResponse } from '../payloads/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map, tap } from 'rxjs/operators';
 @Injectable({

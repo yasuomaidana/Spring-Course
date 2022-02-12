@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../shared/auth.service';
-import { SignupRequestPayload } from './signup-request.payload';
+import { AuthService } from '../../shared/auth/auth.service';
+import { SignupRequestPayload } from '../../shared/payloads/signup-request.payload';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
