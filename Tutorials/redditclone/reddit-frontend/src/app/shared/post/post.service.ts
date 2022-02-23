@@ -13,6 +13,6 @@ export class PostService {
 
   getAllPost():Observable<Array<PostModel>>{
     return this.http.get<Array<PostModel>>(
-      environment.backendHost+"/api/posts");
+      environment.backendHost+"/posts");
   }
 }
