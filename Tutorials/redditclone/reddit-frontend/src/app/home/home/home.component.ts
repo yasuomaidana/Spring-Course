@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PostModel } from 'src/app/shared/models/post-model';
-import { PostService } from 'src/app/shared/post/post.service';
-import { faArrowUp,faArrowDown,faComments } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -11,22 +8,9 @@ import { faArrowUp,faArrowDown,faComments } from '@fortawesome/free-solid-svg-ic
 })
 export class HomeComponent implements OnInit {
 
-  posts$:Array<PostModel>=[];
-  faArrowUp = faArrowUp;
-  faArrowDown = faArrowDown;
-  faComments = faComments;
-  upvoteColor = "";
-  downvoteColor = "";
-
-  constructor(private postService:PostService) { }
+  constructor() {}
 
   ngOnInit(): void {
-    this.postService.getAllPost().subscribe(posts=>{
-      this.posts$=posts;
-    })
   }
 
-  upvotePost(){}
-  downvotePost(){}
-  goToPost(postId:Number){}
 }

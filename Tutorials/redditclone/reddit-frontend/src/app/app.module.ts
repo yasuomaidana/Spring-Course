@@ -14,6 +14,10 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TokenInterceptor } from './token-interceptor';
+import { PostTileComponent } from './post/post-tile/post-tile.component';
+import { VoteButtonComponent } from './post/vote-button/vote-button.component';
+import { SideBarComponent } from './post/side-bar/side-bar.component';
+import { SubredditSideBarComponent } from './post/subreddit-side-bar/subreddit-side-bar.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { TokenInterceptor } from './token-interceptor';
     HeaderComponent,
     SignupComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    PostTileComponent,
+    VoteButtonComponent,
+    SideBarComponent,
+    SubredditSideBarComponent
   ],
   imports: [
     BrowserModule,
