@@ -16,7 +16,6 @@ export class SubredditSideBarComponent implements OnInit {
   ngOnInit(): void {
     this.subRedditService.getAllSubreddit()
     .subscribe(data=>{
-      console.log("entra", data);
       if(data.length>4){
         this.subReddits = data.splice(0,3);
         this.displayViewAll = true;
