@@ -1,7 +1,7 @@
 <div class="sidebar-view-subreddit">
   <div class="black fw-bold">Browse Subreddits</div>
   <hr />
-  <span *ngFor="let subreddit of subreddits">
+  <span *ngFor="let subreddit of subReddits">
       <span class="subreddit-text"><a href="/view-subreddit/{{subreddit.id}}">{{subreddit.name}}</a></span>
       <hr />
   </span>
