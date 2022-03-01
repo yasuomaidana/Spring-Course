@@ -1,6 +1,6 @@
 export class SubredditModel{
   id?:number;
-  name:string;
+  subRedditName:string;
   description:string;
   postcount?:number;
 }
