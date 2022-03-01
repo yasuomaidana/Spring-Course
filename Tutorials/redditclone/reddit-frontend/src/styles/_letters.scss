@@ -1,0 +1,20 @@
+@mixin add-font-size($size) {
+  &-#{$size} {
+    font-size: $size;
+  }
+}
+@mixin add-font-weight($weight) {
+  &-#{$weight} {
+    font-weight: $weight;
+  }
+}
+.fs{
+  @include add-font-size(1em);
+  @include add-font-size(2em);
+}
+.fw{
+  @include add-font-weight("bold");
+}
+.center{
+  text-align: center;
+}
