@@ -1,0 +1,21 @@
+@mixin add-font-size($argument) {
+  $string: $argument;
+  &-#{$string} {
+    font-size: $argument+'em';
+  }
+}
+@mixin add-font-weight($argument) {
+  $string: $argument;
+  &-#{$string} {
+    font-size: $argument;
+  }
+}
+.fs{
+  @include add-font-size(1);
+}
+.fw{
+  @include add-font-weight("bold");
+}
+.center{
+  text-align: center;
+}
