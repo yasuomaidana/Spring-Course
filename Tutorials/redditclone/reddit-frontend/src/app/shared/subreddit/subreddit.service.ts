@@ -15,4 +15,8 @@ export class SubredditService {
     return this.http
     .get<Array<SubredditModel>>(environment.backendHost+"/subreddit");
   }
+
+  createSubreddit(subredditModel: SubredditModel):Observable<SubredditModel> {
+    return this.http.post<SubredditModel>(environment.backendHost+"/subreddit",subredditModel);
+  }
 }
