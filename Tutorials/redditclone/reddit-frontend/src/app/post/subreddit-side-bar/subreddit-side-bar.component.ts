@@ -9,19 +9,21 @@ import { SubredditService } from 'src/app/shared/subreddit/subreddit.service';
 })
 export class SubredditSideBarComponent implements OnInit {
 
-  displayViewAll:boolean=false;
+  displayViewAll:boolean;
   subReddits:Array<SubredditModel>;
   constructor(private subRedditService:SubredditService) { }
 
   ngOnInit(): void {
     this.subRedditService.getAllSubreddit()
     .subscribe(data=>{
+      console.log("entra", data);
       if(data.length>4){
         this.subReddits = data.splice(0,3);
         this.displayViewAll = true;
       }
       else this.subReddits=data;
     });
+    console.log(this.subReddits);
   }
 
 }
