@@ -1,1 +1,33 @@
-<p>create-subreddit works!</p>
+<div class="container reddit-body">
+  <div class="row">
+    <div class="create-subreddit-container">
+      <form class="post-form" [formGroup]="createSubredditForm" (ngSubmit)="createSubreddit()">
+        <div class="form-group">
+          <div class="create-subreddit-heading">Create Subreddit</div>
+          <hr />
+          <input type="text" formControlName="title" class="form-control" class="col-12"
+            placeholder="Title">
+          <textarea type="text" formControlName="description" class="mt-2 col-12"
+            placeholder="Description"></textarea>
+          <div>
+            <div class="float-right mt-1 center">
+              <button type="button" class="btnDiscard" (click)="discard()">Discard</button>
+              <button type="submit" class="btnCreateSubreddit">Create</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <div class="sidebar">
+        <h5 class="guidelines">Posting to Spring Reddit</h5>
+        <hr />
+        <ul>
+          <li>Remember the human <hr/></li>
+          <li>Behave like you would in real life <hr/></li>
+          <li>Don't spam <hr/></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
