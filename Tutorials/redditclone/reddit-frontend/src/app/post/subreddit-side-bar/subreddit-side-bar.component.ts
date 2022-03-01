@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubredditSideBarComponent implements OnInit {
 
+  displayViewAll:boolean=false;
+  subreddits=null;
   constructor() { }
 
   ngOnInit(): void {
