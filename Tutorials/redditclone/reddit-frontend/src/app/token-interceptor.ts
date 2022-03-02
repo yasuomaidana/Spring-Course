@@ -19,8 +19,7 @@ export class TokenInterceptor implements HttpInterceptor{
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
-      var pattern = new RegExp(environment.backendHost+/\/api\/auth\/login.+/);
-      if(req.url.match(pattern)===null) return next.handle(req);
+      if(this.noneedsToken(req.url,req.method)) return next.handle(req);
       const jwtToken = this.authService.getJwtToken();
       if (jwtToken) {
         return next.handle(this.addToken(req, jwtToken)).pipe(catchError(error => {
@@ -34,6 +33,24 @@ export class TokenInterceptor implements HttpInterceptor{
       return next.handle(req);
   }
 
+  private noneedsToken(url:string,method:string):boolean{
+    //Safe gets
+    var base = environment.backendHost;
+    if(method=="POST"){
+      var safepatterns =
+      [/.+auth\//];
+      for(var pattern of safepatterns){
+        if(pattern.test(url)) return true;
+      }
+    }
+    //Safe posts
+    else if(method=="GET"){
+      var safepaths = [base+"/subreddit",
+      base+"/posts"];
+      if (safepaths.includes(url)) return true;
+    }
+    return false;
+  }
   addToken(req:HttpRequest<any>,jwtToken:any){
     return req.clone({
       headers:req.headers.set('Authorization', 'Bearer '+jwtToken)
