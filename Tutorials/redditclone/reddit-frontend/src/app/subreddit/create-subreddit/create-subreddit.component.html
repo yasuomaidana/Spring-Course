@@ -5,14 +5,14 @@
         <div class="form-group">
           <div class="create-subreddit-heading">Create Subreddit</div>
           <hr />
-          <input type="text" formControlName="title" class="form-control" class="col-12"
+          <input type="text" formControlName="title" class="form-control col-12"
             placeholder="Title">
           <textarea type="text" formControlName="description" class="mt-2 col-12"
             placeholder="Description"></textarea>
           <div>
             <div class="float-right mt-1 center">
               <button type="button" class="btnDiscard" (click)="discard()">Discard</button>
-              <button type="submit" class="btnCreateSubreddit">Create</button>
+              <button type="submit" class="btnCreateSubreddit" [disabled]="!createSubredditForm.valid">Create</button>
             </div>
           </div>
         </div>
