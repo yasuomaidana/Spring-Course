@@ -22,7 +22,6 @@ export class SubredditSideBarComponent implements OnInit {
       }
       else this.subReddits=data;
     });
-    console.log(this.subReddits);
   }
 
 }

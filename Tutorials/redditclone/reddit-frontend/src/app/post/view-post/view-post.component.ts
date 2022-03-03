@@ -12,17 +12,21 @@ import { PostService } from 'src/app/shared/post/post.service';
 export class ViewPostComponent implements OnInit {
 
   postId: number;
-  post: PostModel;
-  constructor(private postService: PostService, private activateRoute: ActivatedRoute) {
+  post$: PostModel={
+    id: 0,
+    postName: '',
+    description: '',
+    subRedditName: ''
+  };
+  constructor(private postService: PostService, private activateRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
     this.postId = this.activateRoute.snapshot.params.id;
     this.postService.getPost(this.postId).subscribe(data => {
-      this.post = data;
+      this.post$ = data;
     }, error => {
       throwError(error);
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }

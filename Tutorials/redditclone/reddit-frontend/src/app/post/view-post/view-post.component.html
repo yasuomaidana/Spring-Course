@@ -4,22 +4,22 @@
     <div class="col-md-9">
       <div class="row post">
         <div class="col-md-1">
-          <app-vote-button [post]="post"></app-vote-button>
+          <app-vote-button [post]="post$"></app-vote-button>
         </div>
         <div class="col-md-11">
           <span>
-            <span class="subreddit-text"><a class="post-url" href="">{{post.subredditName}}</a></span>
+            <span class="subreddit-text"><a class="post-url" href="">{{post$.subRedditName}}</a><br></span>
             <span>Posted
-                <span> {{post.duration}} </span>
+                <span> {{post$.duration}} </span>
                 by
-              <a *ngIf="post.userName === null" class="username" href="">Anonymous</a>
-              <a *ngIf="post.userName != null" class="username" href="">{{post.userName}}</a>
+              <a *ngIf="post$.userName === null" class="username" href="">Anonymous</a>
+              <a *ngIf="post$.userName != null" class="username" href="">{{post$.userName}}</a>
             </span>
           </span>
           <hr />
-          <a routerLink="post.url" class="post-title">{{post.postName}}</a>
+          <a routerLink="post$.url" class="post-title">{{post$.postName}}</a>
           <div>
-            <p class="post-text" [innerHtml]="post.description"></p>
+            <p class="post-text" [innerHtml]="post$.description"></p>
           </div>
         </div>
       </div>
