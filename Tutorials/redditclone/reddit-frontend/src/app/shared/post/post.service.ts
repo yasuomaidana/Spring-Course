@@ -20,4 +20,9 @@ export class PostService {
   createPost(postPayload: CreatePostPayload): Observable<any> {
     return this.http.post(environment.backendHost+"/posts", postPayload);
   }
+
+  getPost(postId: number):Observable<PostModel> {
+    return this.http.get<PostModel>(
+      environment.backendHost+`/posts/${postId}`);
+  }
 }
