@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'signup', component:SignupComponent },
   {path:'login',component:LoginComponent},
-  {path:'user-profile',component:UserProfileComponent},
+  {path:'user-profile/:name',component:UserProfileComponent},
   {path:'create-post',component:CreatePostComponent},
   {path:'create-subreddit',component:CreateSubredditComponent},
   {path:'list-subreddits',component:ListSubredditsComponent},
