@@ -17,4 +17,8 @@ export class CommentService {
   postComment(commentPayload: CommentPayload):Observable<any> {
     return this.http.post<any>(environment.backendHost+'/comments/', commentPayload);
   }
+
+  getAllCommentsByUser(name: string):Observable<CommentPayload[]> {
+    return this.http.get<CommentPayload[]>(environment.backendHost+"/comments/by-user/" + name);
+  }
 }

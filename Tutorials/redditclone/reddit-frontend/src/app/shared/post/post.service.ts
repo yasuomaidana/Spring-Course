@@ -25,4 +25,9 @@ export class PostService {
     return this.http.get<PostModel>(
       environment.backendHost+`/posts/${postId}`);
   }
+
+  getAllPostsByUser(name: string):Observable<Array<PostModel>> {
+    return this.http.get<Array<PostModel>>(
+      environment.backendHost+`/posts/by-user/${name}`);
+  }
 }
