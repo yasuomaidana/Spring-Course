@@ -34,4 +34,9 @@ public class PostController {
     public ResponseEntity<PostResponse> getPost(@PathVariable("id") Long id){
         return status(HttpStatus.OK).body(postService.getPost(id));
     }
+
+    @GetMapping("/by-user/{username}")
+    public ResponseEntity<List<PostResponse>> getPost(@PathVariable("username") String username){
+        return status(HttpStatus.OK).body(postService.getPostsByUsername(username));
+    }
 }
