@@ -9,7 +9,7 @@
         <div class="col-md-11">
           <span>
             <span class="subreddit-text"><a class="post-url" href="">{{post.subRedditName}}</a></span>
-            <span> . Posted
+            <span> Posted
               <span> {{post.duration}} </span>
               by
               <a *ngIf="post.userName === null" class="username" href="">Anonymous</a>
@@ -26,13 +26,13 @@
               <div class="form-group">
                 <textarea class="form-control" [formControlName]="'text'" placeholder="Your Thoughts?"></textarea>
               </div>
-              <button type="submit" class="login float-right">Comment</button>
+              <button type="submit" class="login float-right" [disabled]="commentForm.invalid">Comment</button>
             </form>
           </div>
           <div class="mt-3" *ngFor="let comment of comments">
             <div class="comment">
               <div class="username">
-                <a routerLink="/user/comment.username">{{comment.username}}</a>
+                <a routerLink="/user/comment.username">{{comment.userName}}</a>
               </div>
               <div>
                 <p>{{comment.duration}}</p>
