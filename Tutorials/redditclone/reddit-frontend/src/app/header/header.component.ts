@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = this.authService.isLoggedIn();
   }
 
-  goToUserProfile(){}
+  goToUserProfile(){
+    this.router.navigateByUrl("/user-profile/"+this.authService.getUserName());
+  }
   logout(){}
 }
