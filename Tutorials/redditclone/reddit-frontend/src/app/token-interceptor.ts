@@ -34,21 +34,18 @@ export class TokenInterceptor implements HttpInterceptor{
   }
 
   private noneedsToken(url:string,method:string):boolean{
+    var safepatterns:RegExp[]=[];
     //Safe gets
-    var base = environment.backendHost;
     if(method=="POST"){
-      var safepatterns =
-      [/.+auth\//];
-      for(var pattern of safepatterns){
-        if(pattern.test(url)) return true;
-      }
+      safepatterns = [/.+auth\//];
     }
     //Safe posts
     else if(method=="GET"){
-      var safepaths = [base+"/subreddit",
-      base+"/posts"];
-      if (safepaths.includes(url)) return true;
+      safepatterns = [/.+subreddit$/,/.+posts$/];
     }
+
+    if(safepatterns.find(pattern=>pattern.test(url))) return true;
+
     return false;
   }
   addToken(req:HttpRequest<any>,jwtToken:any){
