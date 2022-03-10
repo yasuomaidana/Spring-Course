@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { SignupRequestPayload } from "../payloads/signup-request.payload";
 import { environment } from 'src/environments/environment';
@@ -7,11 +7,14 @@ import { LoginRequestPayload } from '../payloads/login-request.payload';
 import { LoginResponse } from '../payloads/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map, tap } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  @Output() loggedIn:EventEmitter<boolean> = new EventEmitter();
+  @Output() username:EventEmitter<string> = new EventEmitter();
   constructor(private httpClient:HttpClient,
     private localStorage:LocalStorageService) { }
 
@@ -31,6 +34,9 @@ export class AuthService {
       this.localStorage.store('username',data.username);
       this.localStorage.store('refreshToken',data.refreshToken);
       this.localStorage.store('expiresAt',data.expiresAt);
+
+      this.loggedIn.emit(true);
+      this.username.emit(data.username);
       return true;
     }));
   }
