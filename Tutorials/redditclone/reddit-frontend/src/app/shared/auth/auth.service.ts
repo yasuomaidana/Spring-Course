@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { SignupRequestPayload } from "../payloads/signup-request.payload";
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../payloads/login-request.payload';
 import { LoginResponse } from '../payloads/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -63,5 +63,15 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return this.getJwtToken() != null;
+  }
+
+  logout(){
+    this.httpClient.post(environment.backendHost+"/auth/logout",
+    this.getRefreshToken,{responseType:'text'})
+    .subscribe(data=>console.log(data),error=>throwError(error));
+    this.localStorage.clear('authenticationToken');
+    this.localStorage.clear('username');
+    this.localStorage.clear('refreshToken');
+    this.localStorage.clear('expiresAt');
   }
 }
