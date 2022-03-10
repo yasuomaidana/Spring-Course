@@ -14,6 +14,7 @@ import com.JavaSpringPractice.ReditClone.security.JwtProvider;
 import com.JavaSpringPractice.ReditClone.service.mailservice.MailService;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -118,4 +119,8 @@ public class AuthService {
                   .build();
      }
 
+    public boolean isLoggedIn() {
+         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+    }
 }
