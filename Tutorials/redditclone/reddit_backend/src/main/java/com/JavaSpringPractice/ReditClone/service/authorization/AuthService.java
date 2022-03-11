@@ -1,5 +1,6 @@
 package com.JavaSpringPractice.ReditClone.service.authorization;
 
+import com.JavaSpringPractice.ReditClone.config.properties.AppConfig;
 import com.JavaSpringPractice.ReditClone.dto.AuthenticationResponse;
 import com.JavaSpringPractice.ReditClone.dto.LoginRequest;
 import com.JavaSpringPractice.ReditClone.dto.RefreshTokenRequest;
@@ -40,6 +41,7 @@ public class AuthService {
      private final AuthenticationManager authenticationManager;//JwtAuthenticationFilter is the one that implements the thing
      private final JwtProvider jwtProvider;
      private final RefreshTokenService refreshTokenService;
+     private final AppConfig appConfig;
 
      @Transactional
      public void signup(RegisterRequest registerRequest){
@@ -62,7 +64,7 @@ public class AuthService {
                           ,user.getEmail(),
                           "Thank you for signing up to Spring Reddit, " +
                           "please click on the below url to activate your account : " +
-                          "http://localhost:8080/api/auth/accountVerification/" + token));
+                          appConfig.getBackend().getUrl_port()+"/api/auth/accountVerification/" + token));
      }
      private String generateVerificationToken(User user){
           String token = UUID.randomUUID().toString();
