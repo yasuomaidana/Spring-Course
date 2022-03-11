@@ -1,4 +1,4 @@
-package com.JavaSpringPractice.ReditClone.config;
+package com.JavaSpringPractice.ReditClone.config.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app")
 @Getter @Setter
 public class AppConfig {
-    private String url;
-    private String url_port;
+    private FrontEndConfig frontend;
+    private BackendConfig backend;
 }
