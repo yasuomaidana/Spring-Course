@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/reddit
+    username: root
+    password:
+  mail:
+    host: smtp.mailtrap.io
+    port: 25
+    username:
+    password: 
+app:
+  frontend:
+    host: localhost
+    protocol: http
+    port: :4200
+    url: "${app.frontend.protocol}://${app.frontend.host}"
+    url_port: "${app.frontend.url}${app.frontend.port}"
+  backend:
+    host: localhost
+    protocol: http
+    port: :8080
+    url: "${app.backend.protocol}://${app.backend.host}"
+    url_port: "${app.backend.url}${app.backend.port}"

@@ -4,6 +4,7 @@ import com.JavaSpringPractice.ReditClone.security.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
+@Configuration
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;//Beans added
@@ -31,11 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         /*srf is used when are sessions, and we are using cookies to
         authenticate, as REST are stateless, and we are using JSON web tokens for authorization we don't need it*/
-        httpSecurity.csrf().disable()
+        httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()//Allows incoming requests
                 .antMatchers("/api/auth/**")//any other path should from ** should be authenticated
                 .permitAll()
                 .antMatchers(HttpMethod.GET,"/api/subreddit")
+                .permitAll()
+                .antMatchers(HttpMethod.GET,"/api/posts")
+                .permitAll()
+                .antMatchers(HttpMethod.GET,"/api/posts/**")
                 .permitAll()
                 .antMatchers("/v2/api-docs",
                         "/configuration/ui",
@@ -48,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .anyRequest()
                 .authenticated();
+
         httpSecurity.addFilterBefore(jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);
     }

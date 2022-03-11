@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.time.Instant;
-import java.util.Date;
 
 import static java.util.Date.from;
 
@@ -61,7 +60,12 @@ public class JwtProvider {
         }
     }
     public boolean validateToken(String jwt){
-        Jws<Claims> ans = Jwts.parserBuilder().setSigningKey(getPublicKey()).build().parseClaimsJws(jwt);
+        try {
+            Jwts.parserBuilder().setSigningKey(getPublicKey()).build().parseClaimsJws(jwt);
+        }
+        catch(ExpiredJwtException expiredJwtException){
+            throw new SpringRedditException("Expired token");
+        }
         return true;
     }
 

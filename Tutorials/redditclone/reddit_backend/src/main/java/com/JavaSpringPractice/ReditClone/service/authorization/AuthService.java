@@ -1,5 +1,6 @@
 package com.JavaSpringPractice.ReditClone.service.authorization;
 
+import com.JavaSpringPractice.ReditClone.config.properties.AppConfig;
 import com.JavaSpringPractice.ReditClone.dto.AuthenticationResponse;
 import com.JavaSpringPractice.ReditClone.dto.LoginRequest;
 import com.JavaSpringPractice.ReditClone.dto.RefreshTokenRequest;
@@ -13,7 +14,8 @@ import com.JavaSpringPractice.ReditClone.repository.VerificationTokenRepository;
 import com.JavaSpringPractice.ReditClone.security.JwtProvider;
 import com.JavaSpringPractice.ReditClone.service.mailservice.MailService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,6 +41,7 @@ public class AuthService {
      private final AuthenticationManager authenticationManager;//JwtAuthenticationFilter is the one that implements the thing
      private final JwtProvider jwtProvider;
      private final RefreshTokenService refreshTokenService;
+     private final AppConfig appConfig;
 
      @Transactional
      public void signup(RegisterRequest registerRequest){
@@ -49,7 +51,11 @@ public class AuthService {
           user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
           user.setCreated(Instant.now());
           user.setEnabled(false);
-          userRepository.save(user);
+          try{
+               userRepository.save(user);
+          }catch (DataIntegrityViolationException dive){
+               throw new SpringRedditException("Duplicated user",dive);
+          }
 
           String token = generateVerificationToken(user);
           mailService.sendMail(
@@ -58,7 +64,7 @@ public class AuthService {
                           ,user.getEmail(),
                           "Thank you for signing up to Spring Reddit, " +
                           "please click on the below url to activate your account : " +
-                          "http://localhost:8080/api/auth/accountVerification/" + token));
+                          appConfig.getBackend().getUrl_port()+"/api/auth/accountVerification/" + token));
      }
      private String generateVerificationToken(User user){
           String token = UUID.randomUUID().toString();
@@ -115,4 +121,8 @@ public class AuthService {
                   .build();
      }
 
+    public boolean isLoggedIn() {
+         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+         return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
+    }
 }
